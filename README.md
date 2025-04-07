@@ -40,6 +40,7 @@ O objetivo deste projeto é permitir que o usuário adicione eventos ao calendá
 │   │   └── style.css
 │   ├── js/
 │   │   └── script.js
+│   │   └── main.js
 │   └── index.html
 ├── data/
 ├── server.js
