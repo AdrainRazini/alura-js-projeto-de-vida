@@ -339,3 +339,39 @@ function comecaCronometro() {
 }
 
 
+ // Aplica o tema salvo ou escuro por padrão
+ window.addEventListener("DOMContentLoaded", () => {
+  const selectTema = document.getElementById("tema");
+  let temaSalvo = localStorage.getItem("tema");
+
+  // Se não tiver nada salvo, define como escuro
+  if (!temaSalvo) {
+    temaSalvo = "escuro";
+    localStorage.setItem("tema", temaSalvo);
+  }
+
+  if (temaSalvo === "escuro") {
+    document.body.classList.add("dark-mode");
+    selectTema.value = "escuro";
+  } else {
+    document.body.classList.remove("dark-mode");
+    selectTema.value = "claro";
+  }
+});
+
+function toggleTheme() {
+  const temaSelecionado = document.getElementById("tema").value;
+
+  if (temaSelecionado === "escuro") {
+    document.body.classList.add("dark-mode");
+  } else {
+    document.body.classList.remove("dark-mode");
+  }
+
+  localStorage.setItem("tema", temaSelecionado);
+}
+
+function alternarPainel(id) {
+  const painel = document.getElementById(id);
+  painel.style.display = (painel.style.display === "none" || painel.style.display === "") ? "block" : "none";
+}
