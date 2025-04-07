@@ -83,6 +83,33 @@ body:not(.dark-mode) .Grupo:hover {
   display: none;
 }
 
+.config-frame {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--cor-dia);
+  color: var(--cor-texto-claro);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  z-index: 999;
+  width: 300px;
+  max-width: 90%;
+  display: none;
+}
+
+body:not(.dark-mode) .config-frame {
+  background-color: var(--cor-fundo-claro);
+  color: var(--cor-texto-escuro);
+}
+
+.config-frame h2 {
+  margin-top: 0;
+  text-align: center;
+}
+
+
 </style>
 
 <body>
@@ -98,8 +125,6 @@ body:not(.dark-mode) .Grupo:hover {
   <div class="search-theme">
     <i class="fas fa-search"></i>
     <input type="text" id="search-event" placeholder="Buscar evento...">
-    <button onclick="toggleTheme()">
-      <i class="fas fa-adjust"></i>
     </button>
   </div>
 
@@ -107,7 +132,7 @@ body:not(.dark-mode) .Grupo:hover {
     <ul>
       <li><a href="#"><i class="fas fa-home"></i> Início</a></li>
       <li><a href="#"><i class="fas fa-calendar-plus"></i> Novo Evento</a></li>
-      <li><a href="#"><i class="fas fa-cog"></i> Configurações</a></li>
+      <li><a href="#" onclick="alternarPainel('config-frame')"><i class="fas fa-cog"></i> Configurações</a></li>
     </ul>
   </nav>
 </header>
@@ -157,6 +182,46 @@ body:not(.dark-mode) .Grupo:hover {
           <h1>Um menu/Grupo na tela</h1>
           
         </div>
+
+        
+
+        <div id="config-frame" class="config-frame">
+          <h2>Configurações</h2>
+        
+          <label for="tema">Tema:</label>
+          <select id="tema" onchange="toggleTheme()">
+            <option value="claro">Claro</option>
+            <option value="escuro">Escuro</option>
+          </select>
+        
+          <script>
+            function toggleTheme() {
+              const temaSelecionado = document.getElementById("tema").value;
+              if (temaSelecionado === "escuro") {
+                document.body.classList.add("dark-mode");
+              } else {
+                document.body.classList.remove("dark-mode");
+              }
+            }
+          
+            function alternarPainel(id) {
+              const painel = document.getElementById(id);
+              painel.style.display = (painel.style.display === "none" || painel.style.display === "") ? "block" : "none";
+            }
+          </script>
+          
+
+          <br><br>
+        
+          <label for="notificacoes">Notificações:</label>
+          <input type="checkbox" id="notificacoes" checked>
+        
+          <br><br>
+        
+          <button onclick="alternarPainel('config-frame')">Fechar</button>
+        </div>
+        
+
         <button onclick="alternarPainel('Grupo')">Mostrar/Esconder Grupo</button>
         <button onclick="alternarPainel('Menu')">Mostrar/Esconder Menu</button>
         

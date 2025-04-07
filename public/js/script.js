@@ -273,10 +273,6 @@ function verificarNotificacoes() {
 }
 setInterval(verificarNotificacoes, 60000); // Verifica a cada 1 minuto
 
-// Alterna entre modo claro e escuro
-function toggleTheme() {
-  document.body.classList.toggle("dark-mode");
-}
 
 document.addEventListener("DOMContentLoaded", () => {
     showUpcomingEvents();
@@ -317,3 +313,5 @@ function comecaCronometro() {
     atualizaCronometro();
     setInterval(atualizaCronometro, 1000);
 }
+
+
