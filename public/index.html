@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Calendário Profissional</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+
+    <!-- Barra de busca e botão de tema -->
+    <input type="text" id="search-event" placeholder="Buscar evento...">
+    <button onclick="toggleTheme()">🌗 Alternar Tema</button>
+
+    <!-- Cabeçalho do calendário -->
+    <div class="calendar-header">
+      <button id="prev-month">&lt;</button>
+      <h2 id="month-year"></h2>
+      <button id="next-month">&gt;</button>
+    </div>
+
+    <!-- Corpo principal com calendário e painel de eventos -->
+    <div class="calendar-body">
+      <div class="calendar" id="calendar"></div>
+
+      <div class="event-panel">
+        <h3>Eventos do Dia</h3>
+        <div id="event-list" class="event-list"></div>
+
+        <h3 style="margin-top: 40px;">📅 Próximos eventos</h3>
+        <div id="upcoming-events" class="event-list"></div>
+
+        <!-- Área de adição de novo evento -->
+        <div class="add-event">
+          <input type="time" id="event-time" />
+          <input type="text" id="event-title" placeholder="Título" />
+          <textarea id="event-note" placeholder="Observações ou extras..."></textarea>
+          <button id="add-event">Adicionar Evento</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
