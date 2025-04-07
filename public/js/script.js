@@ -234,7 +234,8 @@ function showUpcomingEvents() {
       const [ano, mes, dia] = ev.key.split("-").map(Number);
       const [hora, minuto] = ev.time.split(":").map(Number);
       const dataEvento = new Date(ano, mes - 1, dia, hora, minuto);
-      tempos.push({ data: dataEvento });
+      tempos.push({ data: dataEvento, title: ev.title, notificado: false });
+
     });
   }
   
@@ -280,38 +281,61 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-  function calculaTempo(tempoObjetivo) {
-    let tempoAtual = new Date();
-    let tempoFinal = tempoObjetivo - tempoAtual;
-    let segundos = Math.floor(tempoFinal / 1000);
-    let minutos = Math.floor(segundos / 60);
-    let horas = Math.floor(minutos / 60);
-    let dias = Math.floor(horas / 24);
+function calculaTempo(tempoObjetivo) {
+  let tempoAtual = new Date();
+  let tempoFinal = tempoObjetivo - tempoAtual;
+  let segundos = Math.floor(tempoFinal / 1000);
+  let minutos = Math.floor(segundos / 60);
+  let horas = Math.floor(minutos / 60);
+  let dias = Math.floor(horas / 24);
 
-    segundos %= 60;
-    minutos %= 60;
-    horas %= 24;
+  segundos %= 60;
+  minutos %= 60;
+  horas %= 24;
 
-    if (tempoFinal > 0) {
-        return [dias, horas, minutos, segundos];
-    } else {
-        return [0, 0, 0, 0];
-    }
+  if (tempoFinal > 0) {
+    return [dias, horas, minutos, segundos];
+  } else {
+    return [0, 0, 0, 0];
+  }
 }
 
+function pedirPermissaoNotificacao() {
+  if ("Notification" in window && Notification.permission === "default") {
+    Notification.requestPermission();
+  }
+}
+
+function notificar(i) {
+  if ("Notification" in window && Notification.permission === "granted") {
+    new Notification("⏰ Calendário", {
+      body: `O Dia Marcado: "${tempos[i].title}" chegou ao horário!`,
+      icon: "https://cdn-icons-png.flaticon.com/512/1827/1827349.png"
+    });
+  }
+}
+
+
 function atualizaCronometro() {
-    for (let i = 0; i < tempos.length; i++) {
-        const [d, h, m, s] = calculaTempo(tempos[i].data);
-        const div = document.getElementById("cronometro" + i);
-        if (div) {
-            div.textContent = `${d}d ${h}h ${m}m ${s}s restantes`;
-        }
+  for (let i = 0; i < tempos.length; i++) {
+    const [d, h, m, s] = calculaTempo(tempos[i].data);
+    const div = document.getElementById("cronometro" + i);
+    if (div) {
+      div.textContent = `${d}d ${h}h ${m}m ${s}s restantes`;
     }
+
+    // Verifica se o tempo acabou e se ainda não foi notificado
+    if (!tempos[i].notificado && d === 0 && h === 0 && m === 0 && s === 0) {
+      notificar(i);
+      tempos[i].notificado = true;
+    }
+  }
 }
 
 function comecaCronometro() {
-    atualizaCronometro();
-    setInterval(atualizaCronometro, 1000);
+  pedirPermissaoNotificacao(); // Pede permissão ao iniciar
+  atualizaCronometro();
+  setInterval(atualizaCronometro, 1000);
 }
 
 

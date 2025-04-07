@@ -194,6 +194,9 @@ body:not(.dark-mode) .config-frame {
             <option value="escuro">Escuro</option>
           </select>
         
+
+
+          
           <script>
             // Aplica o tema salvo ou escuro por padrão
             window.addEventListener("DOMContentLoaded", () => {
@@ -240,13 +243,18 @@ body:not(.dark-mode) .config-frame {
           <input type="checkbox" id="notificacoes" checked>
         
           <br><br>
-        
+
+        <!--
+          <button onclick="alternarPainel('Grupo')">Mostrar/Esconder Grupo</button>
+          <button onclick="alternarPainel('Menu')">Mostrar/Esconder Menu</button>
+          <button onclick="alternarPainel('event-list')">Mostrar/Esconder Lista </button>
+          <br><br>
+            -->
           <button onclick="alternarPainel('config-frame')">Fechar</button>
         </div>
-        
+      
 
-        <button onclick="alternarPainel('Grupo')">Mostrar/Esconder Grupo</button>
-        <button onclick="alternarPainel('Menu')">Mostrar/Esconder Menu</button>
+
         
   </div>
 <script>
