@@ -146,7 +146,50 @@
         </div>
       
 
+<!--
+          <label>Fundo: <input type="color" id="corFundo" /></label><br><br>
+            <label>Texto: <input type="color" id="corTexto" /></label><br><br>
+            <label>Botão: <input type="color" id="corBotao" /></label><br><br>
+            <label>Hover Botão: <input type="color" id="corBotaoHover" /></label><br><br>
+          
+            <button onclick="aplicarCores()">Aplicar Cores</button>
 
+        <script>
+          function aplicarCores() {
+            const root = document.documentElement;
+        
+            const corFundo = document.getElementById("corFundo").value;
+            const corTexto = document.getElementById("corTexto").value;
+            const corBotao = document.getElementById("corBotao").value;
+            const corBotaoHover = document.getElementById("corBotaoHover").value;
+        
+            root.style.setProperty('--cor-fundo-claro', corFundo);
+            root.style.setProperty('--cor-texto-escuro', corTexto);
+            root.style.setProperty('--cor-botao', corBotao);
+            root.style.setProperty('--cor-botao-hover', corBotaoHover);
+        
+            // Salvar no localStorage
+            localStorage.setItem('temaPersonalizado', JSON.stringify({
+              corFundo,
+              corTexto,
+              corBotao,
+              corBotaoHover
+            }));
+          }
+        
+          // Aplicar o tema salvo ao carregar a página
+          window.addEventListener("load", () => {
+            const temaSalvo = JSON.parse(localStorage.getItem('temaPersonalizado'));
+            if (temaSalvo) {
+              document.getElementById("corFundo").value = temaSalvo.corFundo;
+              document.getElementById("corTexto").value = temaSalvo.corTexto;
+              document.getElementById("corBotao").value = temaSalvo.corBotao;
+              document.getElementById("corBotaoHover").value = temaSalvo.corBotaoHover;
+              aplicarCores();
+            }
+          });
+        </script>
+      -->
         
   </div>
   <script>
