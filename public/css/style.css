@@ -234,6 +234,19 @@ body:not(.dark-mode) .top-bar .menu ul li a:hover {
 }
 
 /* === Cabeçalho do calendário === */
+
+.day-label {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.day-name-inside {
+  font-size: 0.8em;
+  color: gray;
+}
+
+
+
 .calendar-header {
   display: flex;
   justify-content: space-between;
@@ -385,8 +398,16 @@ body:not(.dark-mode) .top-bar .menu ul li a:hover {
   margin-bottom: 15px;
   flex: 1;
   overflow-y: auto;
-  max-height: 250px;
+  max-height: 200px;
 }
+
+#upcoming-events {
+  max-height: 200px; /* Ajuste conforme quiser */
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+
 
 /* === Adicionar novo evento === */
 .add-event input,

@@ -15,13 +15,14 @@ let tempos = []; // Array que vai armazenar os tempos-alvo para o cronômetro
 let selectedDate = new Date(); // Data atualmente selecionada
 let events = JSON.parse(localStorage.getItem("calendarEvents")) || {}; // Eventos salvos no localStorage
 
-// Renderiza o calendário do mês atual
 function renderCalendar(date) {
   calendar.innerHTML = ""; // Limpa o calendário atual
+
   const year = date.getFullYear();
   const month = date.getMonth();
-  const firstDay = new Date(year, month, 1).getDay(); // Primeiro dia da semana do mês
-  const daysInMonth = new Date(year, month + 1, 0).getDate(); // Total de dias no mês
+  const firstDay = new Date(year, month, 1).getDay(); // Dia da semana do primeiro dia do mês
+  const daysInMonth = new Date(year, month + 1, 0).getDate(); // Total de dias do mês
+  const diasSemana = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
 
   // Atualiza o texto do mês/ano
   monthYear.textContent = date.toLocaleString("default", { month: "long", year: "numeric" });
@@ -29,17 +30,22 @@ function renderCalendar(date) {
   // Adiciona células vazias antes do primeiro dia do mês
   for (let i = 0; i < firstDay; i++) {
     const empty = document.createElement("div");
+    empty.classList.add("empty");
     calendar.appendChild(empty);
   }
 
-  // Cria as células de cada dia
+  // Cria as células de cada dia com nome do dia dentro
   for (let d = 1; d <= daysInMonth; d++) {
     const cell = document.createElement("div");
     cell.className = "day";
     const cellDate = new Date(year, month, d);
     const key = formatDate(cellDate);
 
-    cell.textContent = d;
+    const dayName = diasSemana[cellDate.getDay()];
+    cell.innerHTML = `
+      <div class="day-label">${d}</div>
+      <div class="day-name-inside">${dayName}</div>
+    `;
 
     if (formatDate(new Date()) === key) {
       cell.classList.add("today"); // Destaque para o dia atual
@@ -48,7 +54,7 @@ function renderCalendar(date) {
     if (events[key] && events[key].length > 0) {
       const indicators = document.createElement("div");
       indicators.className = "event-indicators";
-    
+
       // Adiciona uma bolinha para cada evento
       events[key].forEach(evento => {
         const tema = evento.tema?.toLowerCase();
@@ -58,21 +64,18 @@ function renderCalendar(date) {
           indicators.appendChild(dot);
         }
       });
-    
+
       cell.appendChild(indicators);
     }
-    
-    
-    
 
-    // Ao clicar em um dia, mostra os eventos e destaca o dia selecionado
+    // Clique no dia
     cell.addEventListener("click", () => {
       selectedDate = cellDate;
       showEvents(key);
       highlightSelectedDay(cell);
     });
 
-    // Função que destaca visualmente o dia selecionado
+    // Destaque no dia selecionado
     function highlightSelectedDay(selectedCell) {
       document.querySelectorAll(".day").forEach(cell => {
         cell.classList.remove("selected");
@@ -83,6 +86,7 @@ function renderCalendar(date) {
     calendar.appendChild(cell);
   }
 }
+
 
 // Formata a data para o padrão YYYY-MM-DD
 function formatDate(date) {
@@ -193,76 +197,70 @@ function editEvent(dateKey, index) {
   showUpcomingEvents();
 }
 
-// Mostra os próximos 5 eventos futuros
 function showUpcomingEvents() {
-    const container = document.getElementById("upcoming-events");
-    container.innerHTML = ""; // Limpa o conteúdo atual
-  
-    const allEvents = [];
-  
-    // Agrupa todos os eventos com suas datas convertidas em objetos Date
-    for (const dateKey in events) {
-      const [year, month, day] = dateKey.split("-").map(Number);
-      const eventDate = new Date(year, month - 1, day);
-  
-      events[dateKey].forEach(event => {
-        allEvents.push({
-          ...event,
-          date: eventDate,
-          key: dateKey
-        });
+  const container = document.getElementById("upcoming-events");
+  container.innerHTML = ""; // Limpa o conteúdo atual
+
+  const allEvents = [];
+
+  // Agrupa todos os eventos com suas datas convertidas
+  for (const dateKey in events) {
+    const [year, month, day] = dateKey.split("-").map(Number);
+    const eventDate = new Date(year, month - 1, day);
+
+    events[dateKey].forEach(event => {
+      allEvents.push({
+        ...event,
+        date: eventDate,
+        key: dateKey
       });
-    }
-  
-    // Ordena os eventos por data e hora
-    allEvents.sort((a, b) => {
-      const dateDiff = a.date - b.date;
-      if (dateDiff !== 0) return dateDiff;
-      return a.time.localeCompare(b.time);
     });
-  
-    const now = new Date();
-  
-    // Filtra os eventos futuros e pega os 5 primeiros
-    const próximos = allEvents
-      .filter(event => {
-        const [hours, minutes] = event.time.split(":").map(Number);
-        const fullDate = new Date(event.date);
-        fullDate.setHours(hours, minutes);
-        return fullDate >= now;
-      })
-      .slice(0, 5);
-  
-    // Exibe os eventos ou mensagem padrão
-    if (próximos.length === 0) {
-      container.innerHTML = "<p>Nenhum evento futuro próximo.</p>";
-      return;
-    }
-  
-    // Substituição solicitada: exibição dos eventos e armazenando tempos
-    tempos = []; // Limpa os tempos antigos
-  
-    próximos.forEach((ev, index) => {
-      const div = document.createElement("div");
-      div.className = "event-item";
-      div.innerHTML = `
+  }
+
+  // Ordena os eventos por data e hora
+  allEvents.sort((a, b) => {
+    const dateDiff = a.date - b.date;
+    if (dateDiff !== 0) return dateDiff;
+    return a.time.localeCompare(b.time);
+  });
+
+  const now = new Date();
+
+  // Filtra todos os eventos futuros
+  const futuros = allEvents.filter(event => {
+    const [hours, minutes] = event.time.split(":").map(Number);
+    const fullDate = new Date(event.date);
+    fullDate.setHours(hours, minutes);
+    return fullDate >= now;
+  });
+
+  // Exibe os eventos ou mensagem padrão
+  if (futuros.length === 0) {
+    container.innerHTML = "<p>Nenhum evento futuro próximo.</p>";
+    return;
+  }
+
+  tempos = []; // Limpa os tempos antigos
+
+  futuros.forEach((ev, index) => {
+    const div = document.createElement("div");
+    div.className = "event-item";
+    div.innerHTML = `
       <strong>${ev.key}</strong> - ${ev.time}<br>
       Título: ${ev.title}<br>
       <small>Obs: ${ev.note}</small><br>
       <strong>Tema: ${ev.tema}</strong><br>
       <span id="cronometro${index}" class="cronometro-texto"></span>
     `;
-      container.appendChild(div);
-  
-      // Adiciona ao array de cronômetros
-      const [ano, mes, dia] = ev.key.split("-").map(Number);
-      const [hora, minuto] = ev.time.split(":").map(Number);
-      const dataEvento = new Date(ano, mes - 1, dia, hora, minuto);
-      tempos.push({ data: dataEvento, title: ev.title, notificado: false });
+    container.appendChild(div);
 
-    });
-  }
-  
+    const [ano, mes, dia] = ev.key.split("-").map(Number);
+    const [hora, minuto] = ev.time.split(":").map(Number);
+    const dataEvento = new Date(ano, mes - 1, dia, hora, minuto);
+    tempos.push({ data: dataEvento, title: ev.title, notificado: false });
+  });
+}
+
 // Pesquisa eventos pelo título ou observação
 document.getElementById("search-event").addEventListener("input", (e) => {
   const termo = e.target.value.toLowerCase();
