@@ -48,24 +48,32 @@
           <li><a href="#" onclick="alternarPainel('config-frame')"><i class="fas fa-cog"></i> Configurações</a></li>
           <li><a href="#" onclick="alternarPainel('config-cores-temas')"><i class="fa-solid fa-paintbrush"></i> Cores Tags</a></li>
           <li>
-            <img id="user" src="img/anonimo.png" alt="Foto do usuário" /  onclick="window.location.href='login.html'">
+            <img id="user" src="img/anonimo.png" alt="Foto do usuário" / >
 
           </li>
         </ul>
       </nav>
     
       <script>
-       // Recupera a foto do perfil do usuário
-const userPhoto = localStorage.getItem('userphoto');
-const userImg = document.getElementById('user');
-
-if (userPhoto) {
-  userImg.src = userPhoto; // Usa a foto do usuário
-} else {
-  userImg.src = 'img/anonimo.png'; // Usa uma imagem padrão se não houver foto
-}
-
+        const userPhoto = localStorage.getItem('userphoto');
+        const userImg = document.getElementById('user');
+      
+        if (userPhoto) {
+          userImg.src = userPhoto; // Usa a foto do usuário
+        } else {
+          userImg.src = 'img/anonimo.png'; // Usa uma imagem padrão se não houver foto
+        }
+      
+        // Quando clicar na imagem
+        userImg.addEventListener('click', () => {
+          if (userPhoto) {
+            window.location.href = 'user-dashboard.html';
+          } else {
+            window.location.href = 'login.html';
+          }
+        });
       </script>
+      
     </header>
     
    <!-- Cabeçalho do calendário -->
