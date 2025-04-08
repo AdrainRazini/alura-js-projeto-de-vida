@@ -13,7 +13,7 @@
 </head>
 
 <style>
-  #Menu, #Grupo, #config-cores-temas, #adicionarTema {
+  #Menu, #Grupo, #config-cores-temas, #adicionarTema, #creditos{
   display: none;
 }
 #user {
@@ -23,6 +23,29 @@
       margin-bottom: 20px;
       cursor: pointer; 
     }
+    
+  .creditos {
+    text-align: center;
+    padding: 15px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #2c3e50;
+    margin-top: 40px;
+    border-top: 2px solid #34495e;
+    font-family: Arial, sans-serif;
+    transition: opacity 1s ease;
+  }
+
+  .creditos strong {
+    color: #1abc9c;
+  }
+
+  .sumir {
+    opacity: 0;
+  }
+
+
+
 
 </style>
 
@@ -82,6 +105,45 @@
   <h2 id="month-year"></h2>
   <button id="next-month"><i class="fas fa-chevron-right"></i></button>
 </div>
+
+<div id="creditos" class="creditos">
+  <p id="creditos-texto"></p>
+</div>
+
+<script>
+  const textoCompleto = "Desenvolvido por Adrian Razini Rangel — Programador Full Stack";
+  const creditos = document.getElementById("creditos");
+  const texto = document.getElementById("creditos-texto");
+
+  // Mostra a div dos créditos
+  creditos.style.display = "block";
+
+  let index = 0;
+
+  function escreverTexto() {
+    if (index < textoCompleto.length) {
+      texto.innerHTML += textoCompleto.charAt(index);
+      index++;
+      setTimeout(escreverTexto, 60); // Velocidade da digitação
+    } else {
+      // Espera 3 segundos e esconde
+      setTimeout(() => {
+        creditos.classList.add("sumir"); // efeito fade
+        setTimeout(() => {
+          creditos.style.display = "none"; // remove da tela
+          texto.innerHTML = ""; // limpa o texto se quiser reaparecer depois
+          creditos.classList.remove("sumir");
+        }, 1000); // espera o fade (1s)
+      }, 3000); // espera após digitação
+    }
+  }
+
+  escreverTexto();
+</script>
+
+
+
+
 
 
     <!-- Corpo principal com calendário e painel de eventos -->
