@@ -35,6 +35,7 @@
       <li><a href="#"><i class="fas fa-home"></i> Início</a></li>
       <li><a href="#"><i class="fas fa-calendar-plus"></i> Novo Evento</a></li>
       <li><a href="#" onclick="alternarPainel('config-frame')"><i class="fas fa-cog"></i> Configurações</a></li>
+      <li><a href="#" onclick="alternarPainel('config-cores-temas')"><i class="fas fa-cog"></i> Cores Temas</a></li>
     </ul>
   </nav>
 </header>
@@ -142,9 +143,29 @@
           <button onclick="alternarPainel('event-list')">Mostrar/Esconder Lista </button>
           <br><br>
             -->
+           
+
           <button onclick="alternarPainel('config-frame')">Fechar</button>
         </div>
       
+        <div id="config-cores-temas"  class="config-frame">
+          <h2>Cores dos Temas</h2>
+        
+          <label>Trabalho: <input type="color" id="corTrabalho" value="#0000ff"></label><br><br>
+          <label>Estudo: <input type="color" id="corEstudo" value="#ffa500"></label><br><br>
+          <label>Lazer: <input type="color" id="corLazer" value="#008000"></label><br><br>
+          <label>Pessoal: <input type="color" id="corPessoal" value="#800080"></label><br><br>
+          <label>Reunião: <input type="color" id="corReuniao" value="#ff0000"></label><br><br>
+          <label>Viagem: <input type="color" id="corViagem" value="#008080"></label><br><br>
+          <label>Aniversário: <input type="color" id="corAniversario" value="#ffd700"></label><br><br>
+          <label>Saúde: <input type="color" id="corSaude" value="#dc143c"></label><br><br>
+          <label>Outro: <input type="color" id="corOutro" value="#808080"></label><br><br>
+          <button onclick="resetarCores()">Resetar para Padrão</button>
+
+          <button onclick="aplicarCoresTemas()">Aplicar Cores</button>
+          <button onclick="alternarPainel('config-cores-temas')">Fechar</button>
+        </div>
+        
 
 <!--
           <label>Fundo: <input type="color" id="corFundo" /></label><br><br>
@@ -227,6 +248,50 @@
       aplicarTema(temaSalvo);
     });
   </script>
+
+<script>
+  function aplicarCoresTemas() {
+    const root = document.documentElement;
+
+    const cores = {
+      '--cor-trabalho': document.getElementById("corTrabalho").value,
+      '--cor-estudo': document.getElementById("corEstudo").value,
+      '--cor-lazer': document.getElementById("corLazer").value,
+      '--cor-pessoal': document.getElementById("corPessoal").value,
+      '--cor-reuniao': document.getElementById("corReuniao").value,
+      '--cor-viagem': document.getElementById("corViagem").value,
+      '--cor-aniversario': document.getElementById("corAniversario").value,
+      '--cor-saude': document.getElementById("corSaude").value,
+      '--cor-outro': document.getElementById("corOutro").value
+    };
+
+    for (const [variavel, cor] of Object.entries(cores)) {
+      root.style.setProperty(variavel, cor);
+    }
+
+    // Salva as cores no localStorage
+    localStorage.setItem('coresTemas', JSON.stringify(cores));
+  }
+
+  // Aplicar cores salvas ao carregar
+  window.addEventListener("load", () => {
+    const coresSalvas = JSON.parse(localStorage.getItem('coresTemas'));
+    if (coresSalvas) {
+      for (const [variavel, cor] of Object.entries(coresSalvas)) {
+        document.documentElement.style.setProperty(variavel, cor);
+        const idInput = variavel.replace('--cor-', 'cor').charAt(0).toUpperCase() + variavel.replace('--cor-', 'cor').slice(1);
+        const input = document.getElementById(idInput);
+        if (input) input.value = cor;
+      }
+    }
+  });
+  function resetarCores() {
+  localStorage.removeItem('coresTemas');
+  location.reload(); // recarrega para aplicar os padrões
+}
+
+
+</script>
 
   <script src="js/script.js"></script>
 
