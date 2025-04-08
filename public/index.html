@@ -47,17 +47,23 @@
           <li><a href="#" onclick="alternarPainel('config-frame')"><i class="fas fa-cog"></i> Configurações</a></li>
           <li><a href="#" onclick="alternarPainel('config-cores-temas')"><i class="fa-solid fa-paintbrush"></i> Cores Tags</a></li>
           <li>
-            <img id="user" src="" alt="Foto do usuário" />
+            <img id="user" src="img/anonimo.png" alt="Foto do usuário" />
+
           </li>
         </ul>
       </nav>
     
       <script>
-        // Recupera a foto do perfil do usuário
-        const userPhoto = localStorage.getItem('userphoto');
-        if (userPhoto) {
-          document.getElementById('user').src = userPhoto;
-        }
+       // Recupera a foto do perfil do usuário
+const userPhoto = localStorage.getItem('userphoto');
+const userImg = document.getElementById('user');
+
+if (userPhoto) {
+  userImg.src = userPhoto; // Usa a foto do usuário
+} else {
+  userImg.src = 'img/anonimo.png'; // Usa uma imagem padrão se não houver foto
+}
+
       </script>
     </header>
     
