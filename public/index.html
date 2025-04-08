@@ -12,105 +12,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
-<style>
 
-button {
-  background-color: var(--cor-dia);
-  color: var(--cor-texto-claro);
-  padding: 10px 20px;
-  margin: 10px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: var(--cor-dia-hover);
-}
-
-body:not(.dark-mode) button {
-  background-color: var(--cor-fundo-claro);
-  color: var(--cor-texto-escuro);
-}
-
-body:not(.dark-mode) button:hover {
-  background-color: var(--cor-claro-barra);
-}
-
-
-.Menu,
-.Grupo {
-  background-color: var(--cor-dia);
-  color: var(--cor-texto-claro);
-  padding: 20px;
-  margin: 20px auto;
-  max-width: 600px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  transition: transform 0.3s ease, background-color 0.3s ease;
-}
-
-.Menu:hover,
-.Grupo:hover {
-  transform: scale(1.02);
-  background-color: var(--cor-dia-hover);
-}
-
-.Menu h1,
-.Grupo h1 {
-  font-size: 24px;
-  margin: 0;
-  text-align: center;
-}
-
-/* Tema claro */
-body:not(.dark-mode) .Menu,
-body:not(.dark-mode) .Grupo {
-  background-color: var(--cor-fundo-claro);
-  color: var(--cor-texto-escuro);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-body:not(.dark-mode) .Menu:hover,
-body:not(.dark-mode) .Grupo:hover {
-  background-color: var(--cor-claro-barra);
-}
-
-
-#Menu, #Grupo {
-  display: none;
-}
-
-.config-frame {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: var(--cor-dia);
-  color: var(--cor-texto-claro);
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-  z-index: 999;
-  width: 300px;
-  max-width: 90%;
-  display: none;
-}
-
-body:not(.dark-mode) .config-frame {
-  background-color: var(--cor-fundo-claro);
-  color: var(--cor-texto-escuro);
-}
-
-.config-frame h2 {
-  margin-top: 0;
-  text-align: center;
-}
-
-
-</style>
 
 <body>
   <div class="container">
@@ -217,13 +119,8 @@ body:not(.dark-mode) .config-frame {
 
         <div id="config-frame" class="config-frame">
           <h2>Configurações</h2>
-        
-          <label for="tema">Tema:</label>
-          <select id="tema" onchange="toggleTheme()">
-            <option value="claro">Claro</option>
-            <option value="escuro">Escuro</option>
-          </select>
-        
+        <button id="toggleTheme">Alternar Fundo</button>
+
           <br><br>
         
           <label for="notificacoes">Notificações:</label>
@@ -245,6 +142,30 @@ body:not(.dark-mode) .config-frame {
         
   </div>
   
+  <script>
+    const toggleBtn = document.getElementById("toggleTheme");
+  
+    toggleBtn.addEventListener("click", () => {
+      document.body.classList.toggle("dark-mode");
+  
+      // Salvar o estado no localStorage (opcional)
+      if (document.body.classList.contains("dark-mode")) {
+        localStorage.setItem("tema", "escuro");
+      } else {
+        localStorage.setItem("tema", "claro");
+      }
+    });
+  
+    // Ao carregar a página, aplicar o tema salvo
+    window.addEventListener("load", () => {
+      const temaSalvo = localStorage.getItem("tema");
+      if (temaSalvo === "escuro") {
+        document.body.classList.add("dark-mode");
+      }
+    });
+  </script>
+  
+
   <script src="js/script.js"></script>
 
   

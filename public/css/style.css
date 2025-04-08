@@ -13,16 +13,38 @@
   --cor-sucesso: #28a745;
   --cor-botao: #6fff57;
   --cor-botao-hover: #58db46;
+
+  /* Cores dos temas */
   --cor-trabalho: blue;
-  --cor-medico: red;
   --cor-estudo: orange;
+  --cor-lazer: green;
+  --cor-pessoal: purple;
+  --cor-reuniao: red;
+  --cor-viagem: teal;
+  --cor-aniversario: gold;
+  --cor-saude: crimson;
+  --cor-outro: gray;
+
   --cor-texto-escuro: #000;
   --cor-texto-claro: #fff;
   --cor-fundo-claro: #ffffff;
   --cor-fundo-escuro: #1c1c1c;
 }
 
-/* === Estilo base === */
+
+
+button {
+  background-color: var(--cor-dia);
+  color: var(--cor-texto-claro);
+  padding: 10px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
@@ -30,11 +52,99 @@ body {
   color: var(--cor-texto-claro);
 }
 
+button:hover {
+  background-color: var(--cor-dia-hover);
+}
+
+body:not(.dark-mode) button {
+  background-color: var(--cor-fundo-claro);
+  color: var(--cor-texto-escuro);
+}
+
+body:not(.dark-mode) button:hover {
+  background-color: var(--cor-claro-barra);
+}
+
+
+.Menu,
+.Grupo {
+  background-color: var(--cor-dia);
+  color: var(--cor-texto-claro);
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 600px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.Menu:hover,
+.Grupo:hover {
+  transform: scale(1.02);
+  background-color: var(--cor-dia-hover);
+}
+
+.Menu h1,
+.Grupo h1 {
+  font-size: 24px;
+  margin: 0;
+  text-align: center;
+}
+
+/* Tema claro */
+body:not(.dark-mode) .Menu,
+body:not(.dark-mode) .Grupo {
+  background-color: var(--cor-fundo-claro);
+  color: var(--cor-texto-escuro);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+body:not(.dark-mode) .Menu:hover,
+body:not(.dark-mode) .Grupo:hover {
+  background-color: var(--cor-claro-barra);
+}
+
+
+#Menu, #Grupo {
+  display: none;
+}
+
+.config-frame {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--cor-dia);
+  color: var(--cor-texto-claro);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  z-index: 999;
+  width: 300px;
+  max-width: 90%;
+  display: none;
+}
+
+body:not(.dark-mode) .config-frame {
+  background-color: var(--cor-fundo-claro);
+  color: var(--cor-texto-escuro);
+}
+
+.config-frame h2 {
+  margin-top: 0;
+  text-align: center;
+}
+
+
+
+
 .container {
   max-width: 1200px;
   margin: 20px auto;
   padding: 10px;
 }
+
+
 
 /* ==== Top Bar ==== */
 .top-bar {
@@ -205,42 +315,46 @@ body:not(.dark-mode) .top-bar .menu ul li a:hover {
   border-radius: 50%;
 }
 
+
 /* Cores dos temas */
 .event-dot.trabalho {
-  background-color: blue;
+  background-color: var(--cor-trabalho);
 }
 
 .event-dot.estudo {
-  background-color: orange;
+  background-color: var(--cor-estudo);
 }
 
 .event-dot.lazer {
-  background-color: green;
+  background-color: var(--cor-lazer);
 }
 
 .event-dot.pessoal {
-  background-color: purple;
+  background-color: var(--cor-pessoal);
 }
 
 .event-dot.reunião {
-  background-color: red;
+  background-color: var(--cor-reuniao);
 }
 
 .event-dot.viagem {
-  background-color: teal; /* verde-azulado */
+  background-color: var(--cor-viagem); /* verde-azulado */
 }
 
 .event-dot.aniversário {
-  background-color: gold; /* dourado */
+  background-color: var(--cor-aniversario); /* dourado */
 }
 
 .event-dot.saúde {
-  background-color: crimson; /* vermelho escuro */
+  background-color: var(--cor-saude); /* vermelho escuro */
 }
 
 .event-dot.outro {
-  background-color: gray; /* cinza */
+  background-color: var(--cor-outro); /* cinza */
 }
+
+
+
 
 
 

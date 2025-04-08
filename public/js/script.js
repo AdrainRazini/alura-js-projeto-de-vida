@@ -63,6 +63,7 @@ function renderCalendar(date) {
     }
     
     
+    
 
     // Ao clicar em um dia, mostra os eventos e destaca o dia selecionado
     cell.addEventListener("click", () => {
@@ -362,8 +363,9 @@ function comecaCronometro() {
 }
 
 
- // Aplica o tema salvo ou escuro por padrão
- window.addEventListener("DOMContentLoaded", () => {
+ 
+// Aplica o tema salvo ou escuro por padrão
+window.addEventListener("DOMContentLoaded", () => {
   const selectTema = document.getElementById("tema");
   let temaSalvo = localStorage.getItem("tema");
 
@@ -382,17 +384,7 @@ function comecaCronometro() {
   }
 });
 
-function toggleTheme() {
-  const temaSelecionado = document.getElementById("tema").value;
 
-  if (temaSelecionado === "escuro") {
-    document.body.classList.add("dark-mode");
-  } else {
-    document.body.classList.remove("dark-mode");
-  }
-
-  localStorage.setItem("tema", temaSelecionado);
-}
 
 function alternarPainel(id) {
   const painel = document.getElementById(id);
