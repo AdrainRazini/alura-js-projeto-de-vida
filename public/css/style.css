@@ -245,6 +245,17 @@ body:not(.dark-mode) .top-bar .menu ul li a:hover {
   color: gray;
 }
 
+/* Domingo: cada 7 dias começando pelo primeiro */
+.calendar .day:nth-child(7n + 1) .day-name-inside {
+  color: red;
+}
+
+/* Sábado: cada 7 dias começando pelo sétimo */
+.calendar .day:nth-child(7n) .day-name-inside {
+  color: blue;
+}
+
+
 
 
 .calendar-header {
