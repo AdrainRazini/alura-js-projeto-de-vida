@@ -8,6 +8,8 @@ const addEventBtn = document.getElementById("add-event");
 const timeInput = document.getElementById("event-time");
 const titleInput = document.getElementById("event-title");
 const noteInput = document.getElementById("event-note");
+const temaSelect = document.getElementById("tema");
+
 
 let tempos = []; // Array que vai armazenar os tempos-alvo para o cronômetro
 let selectedDate = new Date(); // Data atualmente selecionada
@@ -44,8 +46,23 @@ function renderCalendar(date) {
     }
 
     if (events[key] && events[key].length > 0) {
-      cell.classList.add("has-event"); // Marca os dias com eventos
+      const indicators = document.createElement("div");
+      indicators.className = "event-indicators";
+    
+      // Adiciona uma bolinha para cada evento
+      events[key].forEach(evento => {
+        const tema = evento.tema?.toLowerCase();
+        if (tema) {
+          const dot = document.createElement("span");
+          dot.classList.add("event-dot", tema);
+          indicators.appendChild(dot);
+        }
+      });
+    
+      cell.appendChild(indicators);
     }
+    
+    
 
     // Ao clicar em um dia, mostra os eventos e destaca o dia selecionado
     cell.addEventListener("click", () => {
@@ -85,11 +102,13 @@ function showEvents(dateKey) {
     const div = document.createElement("div");
     div.className = "event-item";
     div.innerHTML = `
-      <strong>${ev.time}</strong> - ${ev.title}<br>
-      <small>${ev.note}</small><br>
-      <button onclick="editEvent('${dateKey}', ${index})">Editar</button>
-      <button class="delete" onclick="deleteEvent('${dateKey}', ${index})">Excluir</button>
-    `;
+    <strong>${ev.time}</strong> - ${ev.title}<br>
+    <small>${ev.note}</small><br>
+    <span><b>Tema:</b> ${ev.tema || "N/A"}</span><br>
+    <button onclick="editEvent('${dateKey}', ${index})">Editar</button>
+    <button class="delete" onclick="deleteEvent('${dateKey}', ${index})">Excluir</button>
+  `;
+  
     eventList.appendChild(div);
   });
 
@@ -118,7 +137,8 @@ addEventBtn.addEventListener("click", () => {
 
   if (!time || !title) return alert("Preencha o horário e título!");
 
-  const newEvent = { time, title, note };
+  const newEvent = { time, title, note, tema: temaSelect.value };
+
   if (!events[key]) events[key] = [];
   events[key].push(newEvent);
 
@@ -165,6 +185,8 @@ function editEvent(dateKey, index) {
   timeInput.value = ev.time;
   titleInput.value = ev.title;
   noteInput.value = ev.note;
+  temaSelect.value = ev.tema || "outro";
+
 
   deleteEvent(dateKey, index);
   showUpcomingEvents();
@@ -223,11 +245,12 @@ function showUpcomingEvents() {
       const div = document.createElement("div");
       div.className = "event-item";
       div.innerHTML = `
-          <strong>${ev.key}</strong> - ${ev.time}<br>
-          ${ev.title}<br>
-          <small>${ev.note}</small><br>
-          <span id="cronometro${index}" class="cronometro-texto"></span>
-      `;
+      <strong>${ev.key}</strong> - ${ev.time}<br>
+      Título: ${ev.title}<br>
+      <small>Obs: ${ev.note}</small><br>
+      <strong>Tema: ${ev.tema}</strong><br>
+      <span id="cronometro${index}" class="cronometro-texto"></span>
+    `;
       container.appendChild(div);
   
       // Adiciona ao array de cronômetros

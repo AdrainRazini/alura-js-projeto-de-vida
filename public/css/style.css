@@ -187,6 +187,68 @@ body:not(.dark-mode) .top-bar .menu ul li a:hover {
   animation: bounce 0.3s ease;
 }
 
+
+/* Container das bolinhas de eventos */
+.event-indicators {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 3px;
+}
+
+/* Bolinhas individuais */
+.event-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+/* Cores dos temas */
+.event-dot.trabalho {
+  background-color: blue;
+}
+
+.event-dot.estudo {
+  background-color: orange;
+}
+
+.event-dot.lazer {
+  background-color: green;
+}
+
+.event-dot.pessoal {
+  background-color: purple;
+}
+
+.event-dot.reunião {
+  background-color: red;
+}
+
+.event-dot.viagem {
+  background-color: teal; /* verde-azulado */
+}
+
+.event-dot.aniversário {
+  background-color: gold; /* dourado */
+}
+
+.event-dot.saúde {
+  background-color: crimson; /* vermelho escuro */
+}
+
+.event-dot.outro {
+  background-color: gray; /* cinza */
+}
+
+
+
+
+
+/* Adicione mais conforme os temas que quiser */
+
+
 /* === Animação ao selecionar === */
 @keyframes bounce {
   0%   { transform: scale(1); }

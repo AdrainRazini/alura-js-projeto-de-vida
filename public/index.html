@@ -163,6 +163,37 @@ body:not(.dark-mode) .config-frame {
           <input type="time" id="event-time" />
           <input type="text" id="event-title" placeholder="Título" />
           <textarea id="event-note" placeholder="Observações ou extras..."></textarea>
+          <label for="tema">Tema:</label>
+          <select id="tema">
+            <option value="trabalho">Trabalho</option>
+            <option value="estudo">Estudo</option>
+            <option value="lazer">Lazer</option>
+            <option value="pessoal">Pessoal</option>
+            <option value="reunião">Reunião</option>
+            <option value="viagem">Viagem</option>
+            <option value="aniversário">Aniversário</option>
+            <option value="saúde">Saúde</option>
+            <option value="outro">Outro</option>
+          </select>
+          
+          <!-- Botão para adicionar novo tema -->
+          <button id="adicionarTema">+ Adicionar Tema</button>
+          
+          <script>
+
+            document.getElementById("adicionarTema").addEventListener("click", function () {
+              const novoTema = prompt("Digite o novo tema:");
+              if (novoTema && novoTema.trim() !== "") {
+                const select = document.getElementById("tema");
+                const option = document.createElement("option");
+                option.value = novoTema.toLowerCase();
+                option.textContent = novoTema;
+                select.appendChild(option);
+                select.value = option.value; // seleciona o novo automaticamente
+              }
+            });
+          </script>
+          
           <button id="add-event"><i class="fas fa-plus"></i> Adicionar Evento</button>
         </div>
         
