@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="css/page.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #128C7E;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    #login-page {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 300px;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #128C7E;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 2px solid #ddd;
+      border-radius: 5px;
+      transition: 0.3s;
+      font-size: 16px;
+    }
+
+    input:focus {
+      border-color: #128C7E;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #25D366;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #1eb14f;
+    }
+
+    .back-btn {
+      background-color: red;
+    }
+
+    .back-btn:hover {
+      background-color: darkred;
+    }
+  </style>
+</head>
+<body>
+  <div id="login-page">
+    <h2>Entrar no Chat</h2>
+    
+    <!-- Botão Voltar -->
+    <button id="back-btn" class="back-btn" onclick="window.location.href='index.html'">Voltar</button>
+    
+    <!-- Botão de Login com Google -->
+    <button id="google-login">Entrar com Google</button>
+  </div>
+
+  <script type="module">
+    import { loginWithGoogle } from "./js/main.js";
+    
+    // Adiciona o evento para o login com Google
+    document.getElementById("google-login").addEventListener("click", loginWithGoogle);
+  </script>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

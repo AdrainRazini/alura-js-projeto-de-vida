@@ -16,34 +16,51 @@
   #Menu, #Grupo, #config-cores-temas, #adicionarTema {
   display: none;
 }
+#user {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-bottom: 20px;
+    }
+
 </style>
 
 <body>
   <div class="container">
 
     <!-- Barra de busca e botão de tema -->
-<header class="top-bar">
-  <div class="logo">
-    <i class="fas fa-calendar-alt"></i>
-    <span>Calendário Profissional</span>
-  </div>
-
-  <div class="search-theme">
-    <i class="fas fa-search"></i>
-    <input type="text" id="search-event" placeholder="Buscar evento...">
-    </button>
-  </div>
-
-  <nav class="menu">
-    <ul>
-      <li><a href="#"><i class="fas fa-home"></i> Início</a></li>
-      <li><a href="#"><i class="fas fa-calendar-plus"></i> Novo Evento</a></li>
-      <li><a href="#" onclick="alternarPainel('config-frame')"><i class="fas fa-cog"></i> Configurações</a></li>
-      <li><a href="#" onclick="alternarPainel('config-cores-temas')"><i class="fa-solid fa-paintbrush"></i> Cores Tags</a></li>
-    </ul>
-  </nav>
-</header>
-
+    <header class="top-bar">
+      <div class="logo">
+        <i class="fas fa-calendar-alt"></i>
+        <span>Calendário Profissional</span>
+      </div>
+    
+      <div class="search-theme">
+        <i class="fas fa-search"></i>
+        <input type="text" id="search-event" placeholder="Buscar evento...">
+      </div>
+    
+      <nav class="menu">
+        <ul>
+          <li><a href="#"><i class="fas fa-home"></i> Início</a></li>
+          <li><a href="#"><i class="fas fa-calendar-plus"></i> Novo Evento</a></li>
+          <li><a href="#" onclick="alternarPainel('config-frame')"><i class="fas fa-cog"></i> Configurações</a></li>
+          <li><a href="#" onclick="alternarPainel('config-cores-temas')"><i class="fa-solid fa-paintbrush"></i> Cores Tags</a></li>
+          <li>
+            <img id="user" src="" alt="Foto do usuário" />
+          </li>
+        </ul>
+      </nav>
+    
+      <script>
+        // Recupera a foto do perfil do usuário
+        const userPhoto = localStorage.getItem('userphoto');
+        if (userPhoto) {
+          document.getElementById('user').src = userPhoto;
+        }
+      </script>
+    </header>
+    
    <!-- Cabeçalho do calendário -->
 <div class="calendar-header">
   <button id="prev-month"><i class="fas fa-chevron-left"></i></button>

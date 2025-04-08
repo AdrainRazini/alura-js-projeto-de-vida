@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Central do Usuário</title>
+  <link rel="stylesheet" href="css/page.css">
+  <style>
+    /* Seu CSS já existente */
+    #dashboard {
+      text-align: center;
+    }
+
+    #user-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div id="dashboard">
+    <h2>Central do Usuário</h2>
+    <img id="user-avatar" src="" alt="Foto do usuário" /> <!-- Imagem do usuário -->
+    <div class="user-info">
+      <p><strong>Nome:</strong> <span id="user-name"></span></p>
+      <p><strong>Email:</strong> <span id="user-email"></span></p>
+    </div>
+    <button onclick="Voltar()">Voltar</button>
+  </div>
+
+  <script>
+    // Recupera as informações do usuário
+    document.getElementById('user-name').innerText = localStorage.getItem('username') || "Não identificado";
+    document.getElementById('user-email').innerText = localStorage.getItem('useremail') || "Não identificado";
+
+    // Recupera a foto do perfil do usuário
+    const userPhoto = localStorage.getItem('userphoto');
+    if (userPhoto) {
+        document.getElementById('user-avatar').src = userPhoto;  // Exibe a foto
+    }
+
+    function Voltar() {
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>
