@@ -7,7 +7,7 @@
 ---
 
 # 📅 alura-js-projeto-de-vida - Calendário Interativo
-
+# Editado Por Adrian Razini 
 Projeto desenvolvido com JavaScript, HTML e CSS, originalmente inspirado pelo curso "Projeto de Vida" da Alura. Foi editado e transformado em um **calendário interativo**, ideal para gerenciar eventos, tarefas ou compromissos futuros.
 
 ---
