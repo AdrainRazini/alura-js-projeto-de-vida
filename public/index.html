@@ -115,13 +115,21 @@
           
         </div>
 
-        
+ 
 
         <div id="config-frame" class="config-frame">
           <h2>Configurações</h2>
-        <button id="toggleTheme">Alternar Fundo</button>
 
+          <label for="fundo">Tema:</label>
+          <select id="fundo" onchange="toggleTheme()">
+            <option value="claro">Claro</option>
+            <option value="escuro">Escuro</option>
+          </select>
           <br><br>
+          
+          <button id="toggleThemeBtn">Alternar Fundo</button>
+          <br><br>
+          
         
           <label for="notificacoes">Notificações:</label>
           <input type="checkbox" id="notificacoes" checked>
@@ -141,30 +149,41 @@
 
         
   </div>
-  
   <script>
-    const toggleBtn = document.getElementById("toggleTheme");
+    const select = document.getElementById("fundo");
+    const button = document.getElementById("toggleThemeBtn");
   
-    toggleBtn.addEventListener("click", () => {
-      document.body.classList.toggle("dark-mode");
-  
-      // Salvar o estado no localStorage (opcional)
-      if (document.body.classList.contains("dark-mode")) {
-        localStorage.setItem("tema", "escuro");
+    // Define o tema com base no valor
+    function aplicarTema(tema) {
+      if (tema === "escuro") {
+        document.body.classList.add("dark-mode");
+        document.body.classList.remove("claro-mode");
       } else {
-        localStorage.setItem("tema", "claro");
+        document.body.classList.remove("dark-mode");
+        document.body.classList.add("claro-mode");
       }
+      localStorage.setItem("tema", tema);
+      select.value = tema;
+    }
+  
+    // Função chamada ao mudar o select
+    function toggleTheme() {
+      aplicarTema(select.value);
+    }
+  
+    // Alterna o tema pelo botão
+    button.addEventListener("click", () => {
+      const temaAtual = document.body.classList.contains("dark-mode") ? "escuro" : "claro";
+      const novoTema = temaAtual === "escuro" ? "claro" : "escuro";
+      aplicarTema(novoTema);
     });
   
-    // Ao carregar a página, aplicar o tema salvo
+    // Ao carregar a página, aplica o tema salvo
     window.addEventListener("load", () => {
-      const temaSalvo = localStorage.getItem("tema");
-      if (temaSalvo === "escuro") {
-        document.body.classList.add("dark-mode");
-      }
+      const temaSalvo = localStorage.getItem("tema") || "claro";
+      aplicarTema(temaSalvo);
     });
   </script>
-  
 
   <script src="js/script.js"></script>
 
