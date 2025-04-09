@@ -121,6 +121,8 @@ body:not(.dark-mode) .Grupo:hover {
   display: none;
 }
 
+
+
 body:not(.dark-mode) .config-frame {
   background-color: var(--cor-fundo-claro);
   color: var(--cor-texto-escuro);
