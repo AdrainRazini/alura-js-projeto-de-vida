@@ -367,13 +367,9 @@ function alternarPainel(id) {
   painel.style.display = (painel.style.display === "none" || painel.style.display === "") ? "block" : "none";
 }
 
-// config-add class= add-event class2= config-frame
+//id class= Name class2= name + config-add
 
 function mudarClass(id) {
   const elemento = document.getElementById(id);
-  if (elemento.className === "add-event") {
-    elemento.className = "add-event config-add";
-  } else {
-    elemento.className = "add-event";
-  }
+  elemento.classList.toggle("config-add");
 }
