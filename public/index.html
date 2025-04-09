@@ -13,7 +13,7 @@
 </head>
 
 <style>
-  #Menu, #Grupo, #config-cores-temas, #adicionarTema, #creditos{
+  #Menu, #Grupo, #config-cores-temas, #adicionarTema, #creditos, #config-add{
   display: none;
 }
 #user {
@@ -67,7 +67,7 @@
       <nav class="menu">
         <ul>
           <li><a href="#"><i class="fas fa-home"></i> Início</a></li>
-          <li><a href="#"><i class="fas fa-calendar-plus"></i> Novo Evento</a></li>
+          <li><a href="#" onclick="alternarPainel('config-add')"><i class="fas fa-calendar-plus"></i> Novo Evento</a></li>
           <li><a href="#" onclick="alternarPainel('config-frame')"><i class="fas fa-cog"></i> Configurações</a></li>
           <li><a href="#" onclick="alternarPainel('config-cores-temas')"><i class="fa-solid fa-paintbrush"></i> Cores Tags</a></li>
           <li>
@@ -159,7 +159,11 @@
           <i class="fas fa-calendar-alt"></i> Próximos eventos
         </h3>
         <div id="upcoming-events" class="event-list"></div>
-
+      
+         
+        
+        
+        
         <div class="add-event">
           <input type="time" id="event-time" />
           <input type="text" id="event-title" placeholder="Título" />
@@ -179,7 +183,46 @@
           
           <!-- Botão para adicionar novo tema -->
           <button id="adicionarTema">+ Adicionar Tema</button>
+            <button onclick="alternarPainel('config-add')">Fechar</button>
+          <script>
+
+            document.getElementById("adicionarTema").addEventListener("click", function () {
+              const novoTema = prompt("Digite o novo tema:");
+              if (novoTema && novoTema.trim() !== "") {
+                const select = document.getElementById("tema");
+                const option = document.createElement("option");
+                option.value = novoTema.toLowerCase();
+                option.textContent = novoTema;
+                select.appendChild(option);
+                select.value = option.value; // seleciona o novo automaticamente
+              }
+            });
+          </script>
           
+          <button id="add-event"><i class="fas fa-plus"></i> Adicionar Evento</button>
+        </div>
+
+
+        <div id="config-add" class="add-event config-frame">
+          <input type="time" id="event-time" />
+          <input type="text" id="event-title" placeholder="Título" />
+          <textarea id="event-note" placeholder="Observações ou extras..."></textarea>
+          <label for="tema">Tema:</label>
+          <select id="tema">
+            <option value="trabalho">Trabalho</option>
+            <option value="estudo">Estudo</option>
+            <option value="lazer">Lazer</option>
+            <option value="pessoal">Pessoal</option>
+            <option value="reunião">Reunião</option>
+            <option value="viagem">Viagem</option>
+            <option value="aniversário">Aniversário</option>
+            <option value="saúde">Saúde</option>
+            <option value="outro">Outro</option>
+          </select>
+          
+          <!-- Botão para adicionar novo tema -->
+          <button id="adicionarTema">+ Adicionar Tema</button>
+            <button onclick="alternarPainel('config-add')">Fechar</button>
           <script>
 
             document.getElementById("adicionarTema").addEventListener("click", function () {
@@ -245,7 +288,7 @@
 
           <button onclick="alternarPainel('config-frame')">Fechar</button>
         </div>
-      
+       
         <div id="config-cores-temas"  class="config-frame">
           <h2>Cores dos Temas</h2>
         
@@ -263,7 +306,10 @@
           <button onclick="aplicarCoresTemas()">Aplicar Cores</button>
           <button onclick="alternarPainel('config-cores-temas')">Fechar</button>
         </div>
+
+
         
+
 
 <!--
           <label>Fundo: <input type="color" id="corFundo" /></label><br><br>
@@ -309,8 +355,9 @@
           });
         </script>
       -->
-        
-  </div>
+  
+  
+
   <script>
     const select = document.getElementById("fundo");
     const button = document.getElementById("toggleThemeBtn");
