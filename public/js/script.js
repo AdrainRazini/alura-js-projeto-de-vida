@@ -366,3 +366,25 @@ function alternarPainel(id) {
   const painel = document.getElementById(id);
   painel.style.display = (painel.style.display === "none" || painel.style.display === "") ? "block" : "none";
 }
+
+// add-event config-add
+function alternarPainel(id) {
+  const painel = document.getElementById(id);
+  const addEvent = document.getElementById("add-event");
+
+  const estaVisivel = (painel.style.display === "block");
+
+  // Alternar visibilidade do painel
+  painel.style.display = estaVisivel ? "none" : "block";
+
+  // Se o painel for "config-add"
+  if (id === "config-add") {
+    if (!estaVisivel) {
+      // Está ficando visível agora: esconder add-event
+      addEvent.style.display = "none";
+    } else {
+      // Está sendo ocultado agora: mostrar add-event
+      addEvent.style.display = "block";
+    }
+  }
+}
