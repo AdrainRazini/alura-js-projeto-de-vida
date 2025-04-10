@@ -281,19 +281,8 @@ document.getElementById("search-event").addEventListener("input", (e) => {
 
 const notificacoesEnviadas = new Set();
 
-// Verifica se o evento já foi notificado (usando localStorage para persistência)
-function jaFoiNotificado(id) {
-  return localStorage.getItem(`notificado_${id}`) === "true";
-}
-
-function marcarComoNotificado(id) {
-  localStorage.setItem(`notificado_${id}`, "true");
-}
-
-// Verifica eventos que vão acontecer nos próximos 5 minutos
 function verificarNotificacoes() {
   const agora = new Date();
-
   for (const key in events) {
     events[key].forEach(ev => {
       const [ano, mes, dia] = key.split("-").map(Number);
@@ -301,96 +290,87 @@ function verificarNotificacoes() {
       const evDate = new Date(ano, mes - 1, dia, hora, minuto);
       const idEvento = `${key}_${ev.time}_${ev.title}`;
 
-      if (isNaN(evDate)) {
-        console.warn("Data inválida para o evento:", ev);
-        return;
-      }
-
       const diff = evDate - agora;
       if (diff > 0 && diff < 300000 && !notificacoesEnviadas.has(idEvento)) {
-        alert(`📅 Evento próximo: ${ev.title} às ${ev.time}`);
+        alert(`Evento próximo: ${ev.title} às ${ev.time}`);
         notificacoesEnviadas.add(idEvento);
       }
     });
   }
 }
 
-// Atualiza cronômetro de todos os eventos
-function atualizaCronometro() {
-  tempos.forEach((evento, i) => {
-    const [dias, horas, minutos, segundos] = calculaTempo(evento.data);
-    const div = document.getElementById("cronometro" + i);
+setInterval(verificarNotificacoes, 60000); // Verifica a cada 1 minuto
 
-    if (div) {
-      div.textContent = `${dias}d ${horas}h ${minutos}m ${segundos}s restantes`;
-    }
 
-    if (!evento.notificado && dias === 0 && horas === 0 && minutos === 0 && segundos === 0) {
-      if (!jaFoiNotificado(evento.title)) {
-        notificar(i);
-        evento.notificado = true;
-        marcarComoNotificado(evento.title);
-      }
-    }
-  });
-}
+document.addEventListener("DOMContentLoaded", () => {
+    showUpcomingEvents();
+    comecaCronometro(); // inicia o cronômetro depois que eventos são carregados
+});
 
-// Inicia o cronômetro e pede permissão de notificação
-function comecaCronometro() {
-  pedirPermissaoNotificacao();
-  atualizaCronometro();
-  setInterval(atualizaCronometro, 1000);
-}
 
-// Calcula o tempo restante até o objetivo
 function calculaTempo(tempoObjetivo) {
-  const tempoAtual = new Date();
-  const tempoFinal = tempoObjetivo - tempoAtual;
+  let tempoAtual = new Date();
+  let tempoFinal = tempoObjetivo - tempoAtual;
+  let segundos = Math.floor(tempoFinal / 1000);
+  let minutos = Math.floor(segundos / 60);
+  let horas = Math.floor(minutos / 60);
+  let dias = Math.floor(horas / 24);
 
-  if (tempoFinal <= 0) return [0, 0, 0, 0];
+  segundos %= 60;
+  minutos %= 60;
+  horas %= 24;
 
-  const segundosTotais = Math.floor(tempoFinal / 1000);
-  const dias = Math.floor(segundosTotais / 86400);
-  const horas = Math.floor((segundosTotais % 86400) / 3600);
-  const minutos = Math.floor((segundosTotais % 3600) / 60);
-  const segundos = segundosTotais % 60;
-
-  return [dias, horas, minutos, segundos];
+  if (tempoFinal > 0) {
+    return [dias, horas, minutos, segundos];
+  } else {
+    return [0, 0, 0, 0];
+  }
 }
 
-// Pede permissão ao usuário para notificações
 function pedirPermissaoNotificacao() {
   if ("Notification" in window && Notification.permission === "default") {
     Notification.requestPermission();
   }
 }
 
-// Envia notificação visual e sonora
 function notificar(i) {
-  const evento = tempos[i];
-
-  // Tocar som
+  // Toca o som
   const audio = new Audio("mp/notific.mp3");
-  audio.play().catch(() => {
-    console.warn("🔇 Erro ao tocar som. Dispositivo pode estar silenciado.");
-    alert(`🔔 Evento: "${evento.title}" chegou ao horário!`);
-  });
+  audio.play().catch(e => console.error("Erro ao tocar som:", e));
 
-  // Enviar notificação visual
+  // Envia a notificação (se permitido)
   if ("Notification" in window && Notification.permission === "granted") {
     new Notification("⏰ Calendário", {
-      body: `O Dia Marcado: "${evento.title}" chegou ao horário!`,
-      icon: "https://cdn-icons-png.flaticon.com/512/1827/1827349.png"
+      body: `O Dia Marcado: "${tempos[i].title}" chegou ao horário!`,
+      icon: "img/icons/calendar-lines.png"
     });
   }
 }
 
-// Inicializa tudo após o carregamento da página
-document.addEventListener("DOMContentLoaded", () => {
-  showUpcomingEvents();
-  comecaCronometro();
-  setInterval(verificarNotificacoes, 60000); // Verifica eventos próximos a cada minuto
-});
+
+
+function atualizaCronometro() {
+  for (let i = 0; i < tempos.length; i++) {
+    const [d, h, m, s] = calculaTempo(tempos[i].data);
+    const div = document.getElementById("cronometro" + i);
+    if (div) {
+      div.textContent = `${d}d ${h}h ${m}m ${s}s restantes`;
+    }
+
+    // Verifica se o tempo acabou e se ainda não foi notificado
+    if (!tempos[i].notificado && d === 0 && h === 0 && m === 0 && s === 0) {
+      notificar(i);
+      tempos[i].notificado = true;
+    }
+  }
+}
+
+function comecaCronometro() {
+  pedirPermissaoNotificacao(); // Pede permissão ao iniciar
+  atualizaCronometro();
+  setInterval(atualizaCronometro, 1000);
+}
+
 
 
 function alternarPainel(id) {

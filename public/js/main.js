@@ -37,3 +37,4 @@ export function loginWithGoogle() {
       console.error("Erro ao fazer login:", error);
     });
 }
+
