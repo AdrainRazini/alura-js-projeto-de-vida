@@ -334,6 +334,11 @@ function pedirPermissaoNotificacao() {
 }
 
 function notificar(i) {
+  // Toca o som
+  const audio = new Audio("mp/notific.mp3");
+  audio.play().catch(e => console.error("Erro ao tocar som:", e));
+
+  // Envia a notificação (se permitido)
   if ("Notification" in window && Notification.permission === "granted") {
     new Notification("⏰ Calendário", {
       body: `O Dia Marcado: "${tempos[i].title}" chegou ao horário!`,
@@ -341,6 +346,7 @@ function notificar(i) {
     });
   }
 }
+
 
 
 function atualizaCronometro() {
