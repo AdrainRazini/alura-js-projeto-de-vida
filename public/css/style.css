@@ -80,7 +80,7 @@ body:not(.dark-mode) button:hover {
 
 .Menu:hover,
 .Grupo:hover {
-  transform: scale(1.02);
+
   background-color: var(--cor-dia-hover);
 }
 

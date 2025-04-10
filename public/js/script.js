@@ -278,7 +278,8 @@ document.getElementById("search-event").addEventListener("input", (e) => {
   });
 });
 
-// Verifica a cada minuto se há evento nos próximos 5 minutos
+const notificacoesEnviadas = new Set();
+
 function verificarNotificacoes() {
   const agora = new Date();
   for (const key in events) {
@@ -286,14 +287,17 @@ function verificarNotificacoes() {
       const [ano, mes, dia] = key.split("-").map(Number);
       const [hora, minuto] = ev.time.split(":").map(Number);
       const evDate = new Date(ano, mes - 1, dia, hora, minuto);
+      const idEvento = `${key}_${ev.time}_${ev.title}`;
 
       const diff = evDate - agora;
-      if (diff > 0 && diff < 300000) { // menos de 5 minutos
+      if (diff > 0 && diff < 300000 && !notificacoesEnviadas.has(idEvento)) {
         alert(`Evento próximo: ${ev.title} às ${ev.time}`);
+        notificacoesEnviadas.add(idEvento);
       }
     });
   }
 }
+
 setInterval(verificarNotificacoes, 60000); // Verifica a cada 1 minuto
 
 
@@ -373,3 +377,4 @@ function mudarClass(id) {
   const elemento = document.getElementById(id);
   elemento.classList.toggle("config-add");
 }
+
