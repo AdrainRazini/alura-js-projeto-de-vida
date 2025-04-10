@@ -1,17 +1,19 @@
 // server.js
+require('dotenv').config(); // ← Carrega variáveis do .env
 const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
+
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
+
+const PORT = process.env.PORT || 3000;
 
 const users = {}; // Armazena usuários logados
 
 // Configura a pasta pública para servir os arquivos HTML, CSS e JS
 app.use(express.static('public'));
-
-
 
 // Rota principal
 app.get('/', (req, res) => {
@@ -42,7 +44,7 @@ io.on('connection', (socket) => {
 });
 
 // Inicia o servidor
-server.listen(3000, () => {
-  console.log('Servidor rodando em http://localhost:3000');
+server.listen(PORT, () => {
+  console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
 /* FEITO POR ADRIAN RAZINI */
