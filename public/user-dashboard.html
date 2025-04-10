@@ -104,33 +104,56 @@
     <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
   </div>
 
-  <script>
+  <script type="module">
+    import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+  
+    const firebaseConfig = {
+      apiKey: "AIzaSyAwgWr5YiF9AHFqELcumQUf2tbLSDllTVY",
+      authDomain: "login-4a2eb.firebaseapp.com",
+      projectId: "login-4a2eb",
+      storageBucket: "login-4a2eb.appspot.com",
+      messagingSenderId: "515123551208",
+      appId: "1:515123551208:web:99cd4d8cd241eb0aa3225d",
+      measurementId: "G-D9JHW7EDG1"
+    };
+  
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+  
+    // Dados do localStorage
     const nome = localStorage.getItem('username');
     const email = localStorage.getItem('useremail');
     const foto = localStorage.getItem('userphoto');
-
+  
     document.getElementById('user-name').innerText = nome || "Não identificado";
     document.getElementById('user-email').innerText = email || "Não identificado";
-
+  
     if (foto) {
       document.getElementById('user-avatar').src = foto;
     } else {
       document.getElementById('user-avatar').src = 'img/anonimo.png';
     }
-
-    function voltarParaInicio() {
+  
+    // Voltar
+    window.voltarParaInicio = function () {
       window.location.href = 'index.html';
     }
-
-    function logout() {
-      // Limpa as informações do localStorage
-      localStorage.removeItem('username');
-      localStorage.removeItem('useremail');
-      localStorage.removeItem('userphoto');
-
-      // Redireciona para a tela inicial ou login
-      window.location.href = 'login.html'; // ou 'index.html'
+  
+    // Logout seguro
+    window.logout = function () {
+      signOut(auth).then(() => {
+        localStorage.removeItem('username');
+        localStorage.removeItem('useremail');
+        localStorage.removeItem('userphoto');
+        window.location.href = 'login.html';
+      }).catch((error) => {
+        console.error("Erro ao fazer logout:", error);
+      });
     }
   </script>
+  
+
+  
 </body>
 </html>
