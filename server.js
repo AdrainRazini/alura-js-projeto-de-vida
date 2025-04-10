@@ -1,11 +1,5 @@
 // server.js
-require('dotenv').config();
-const { Configuration, OpenAIApi } = require('openai');
-
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-const openai = new OpenAIApi(configuration);
+require('dotenv').config(); // ← Carrega variáveis do .env
 
 const express = require('express');
 const http = require('http');
@@ -55,4 +49,3 @@ server.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
 /* FEITO POR ADRIAN RAZINI */
-
