@@ -128,6 +128,7 @@ function showEvents(dateKey) {
       localStorage.setItem("calendarEvents", JSON.stringify(events));
       renderCalendar(selectedDate);
       showEvents(dateKey);
+      showUpcomingEvents();
     }
   };
   eventList.appendChild(deleteAll);
