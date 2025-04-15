@@ -35,13 +35,35 @@ O objetivo deste projeto é permitir que o usuário adicione eventos ao calendá
 
 ```bash
 📁 alura-js-projeto-de-vida/
+│
+├── data/
+│   └── firebase.js             
+│
+├── node_modules/               
+│
 ├── public/
 │   ├── css/
-│   │   └── style.css
+│   │   ├── page.css             
+│   │   └── style.css            
+│   │
+│   ├── img/
+│   │   ├── anonimo.png          
+│   │   └── favicon.ico          
+│   │
 │   ├── js/
-│   │   └── script.js
-│   │   └── main.js
-│   └── index.html
-├── data/
-├── server.js
-├── README.md
+│   │   ├── main.js              
+│   │   └── script.js            
+│   │
+│   └── mp/
+│       └── notific.mp3          
+│
+├── index.html                  
+├── login.html                   
+├── user-dashboard.html         
+│
+├── .gitignore                  
+├── package.json                
+├── package-lock.json            
+├── README.md                    
+└── server.js                    
+
