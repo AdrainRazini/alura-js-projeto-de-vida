@@ -337,7 +337,7 @@ body:not(.dark-mode) .top-bar .menu ul li a:hover {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  border: solid black 1px;
+  border: solid rgb(255, 255, 255) 1px;
 }
 
 
