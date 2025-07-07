@@ -334,8 +334,8 @@ body:not(.dark-mode) .top-bar .menu ul li a:hover {
 
 /* Bolinhas individuais */
 .event-dot {
-  width: 7px;
-  height: 7px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
 }
 
